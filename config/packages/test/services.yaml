@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    public: true
+    autowire: true
+    autoconfigure: true
+
+  App\Tests\Stub\FakeNbpClient: ~
+
+  # W TESTACH używamy fake'a zamiast realnego NbpClient
+  App\Service\NbpClient: '@App\Tests\Stub\FakeNbpClient'

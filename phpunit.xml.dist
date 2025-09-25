@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         backupGlobals="false"
-         colors="true"
-         bootstrap="tests/bootstrap.php"
-         convertDeprecationsToExceptions="false"
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+        colors="true"
+        backupGlobals="false"
+        bootstrap="tests/bootstrap.php"
+        convertDeprecationsToExceptions="false"
 >
     <php>
-        <ini name="display_errors" value="1" />
-        <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
-        <server name="SHELL_VERBOSITY" value="-1" />
-        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        <!-- typowe ini -->
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+
+        <!-- środowisko testowe -->
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+
+        <!-- ważne: użyjemy Symfony PHPUnit Bridge z runnerem 8.5 (stabilny z SF 4.4) -->
+        <env name="SYMFONY_PHPUNIT_VERSION" value="8.5"/>
+
+        <!-- wycisz deprecations (vendorowe ostrzeżenia na PHP 8.2) -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
+
+        <!-- opcjonalne: nie usuwaj nic automatycznie przez bridge -->
+        <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
     </php>
 
     <testsuites>
@@ -23,16 +32,8 @@
         </testsuite>
     </testsuites>
 
-<!--    <coverage processUncoveredFiles="true">-->
-<!--        <include>-->
-<!--            <directory suffix=".php">src</directory>-->
-<!--        </include>-->
-<!--    </coverage>-->
-
+    <!-- Listener bridge'a (ok dla SF 4.4). Jeśli miałbyś problemy, można usunąć. -->
     <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
     </listeners>
-
-<!--    <extensions>-->
-<!--    </extensions>-->
 </phpunit>
