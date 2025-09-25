@@ -1,19 +1,25 @@
-#home:
-#  path: /
-#  defaults: { _controller: 'AppBundle\Controller\DefaultController::indexAction' }
-#  methods:  GET
-#
+app.index:
+  path: /
+  controller: App\Controller\DefaultController::index
 
-setupcheck:
-    path: /api/setup-check
-    controller: App\Controller\DefaultController::setupCheck
+app.setup_check:
+  path: /api/setup-check
+  controller: App\Controller\DefaultController::setupCheck
+  methods: [GET]
 
-index:
-    path: /{wildcard}
-    defaults: {
-        _controller: App\Controller\DefaultController::index
-    }
-    requirements:
-        wildcard: .*
-    # controller: App\Controller\DefaultController::index
+app.meta.supported:
+  path: /api/meta/supported
+  controller: App\Controller\MetaController::supported
+  methods: [GET]
 
+app.rates.index:
+  path: /api/rates
+  controller: App\Controller\RatesController::index
+  methods: [GET]
+
+app.rates.history:
+  path: /api/rates/{code}/history
+  controller: App\Controller\RatesController::history
+  methods: [GET]
+  requirements:
+    code: "[A-Za-z]{3}"
